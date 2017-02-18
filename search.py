@@ -1,4 +1,5 @@
 import os
+from os.path import splitext
 
 def main():
     print 'What is the path of the codebase folder:'
@@ -13,12 +14,13 @@ def main():
 
 def search_word(codebase, search_term, file_ext):
     if file_ext:
-	if file_ext[0] == '.':
-	    file_ext = file_ext[1:]
+	if file_ext[0] != '.':
+	    file_ext = '.{}'.format(file_ext)
 
     for subdir, dirs, files in os.walk(codebase):
 	for file in files:
-	    file_text = open(os.path.join(subdir, file)).read()
+	    if splitext(file)[1] == file_ext:
+	    	file_text = open(os.path.join(subdir, file)).read()
 
 
 if __name__ == '__main__':
